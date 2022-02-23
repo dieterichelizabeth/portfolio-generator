@@ -1,9 +1,11 @@
+// uses utils to write the index.html/copy stylesheet
 const { writeFile, copyFile } = require('./utils/generate-site.js');
+// uses inquirer package
 const inquirer = require('inquirer');
 // assigns anonymous HTML template function in page-template.js to the variable generatePage
 const generatePage = require('./src/page-template');
 
-// returns the running of inquire.prompt
+// uses inquirer to prompt for user information
 const promptUser = () => {
   return inquirer.prompt([
     {
@@ -53,6 +55,7 @@ const promptUser = () => {
   ]);
 };
 
+// uses inquirer to prompt for project information
 const promptProject = portfolioData => {
   console.log(`
 =================
@@ -124,8 +127,11 @@ Add a New Project
         default: false
       }
     ])
+
+    // Add project information to portfolioData.projects array.
     .then(projectData => {
       portfolioData.projects.push(projectData);
+      // if the user wants to add another project, loop through project questions again
       if (projectData.confirmAddProject) {
         return promptProject(portfolioData);
       } else {
@@ -135,18 +141,23 @@ Add a New Project
 };
 
 // resolve promise by chaining .then to control sequence of app flow
+// Ask user for their information w/ inquirer prompts
 promptUser()
+  // then ask user for their porject information w/ inquirer prompts
   .then(promptProject)
   .then(portfolioData => {
     return generatePage(portfolioData);
   })
+  // complete portfolio data is returned and sent to the generate page function
   .then(pageHTML => {
     return writeFile(pageHTML);
   })
+  // pass the page HTML to the write file function (returns a promise)
   .then(writeFileResponse => {
     console.log(writeFileResponse);
     return copyFile();
   })
+  // then return copy file- which lets us know if the CSS file was copied correctly
   .then(copyFileResponse => {
     console.log(copyFileResponse);
   })

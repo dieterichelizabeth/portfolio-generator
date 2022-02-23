@@ -12,6 +12,7 @@ const generateAbout = aboutText => {
   `;
 };
 
+// create projects section
 const generateProjects = projectsArr => {
   return `
     <section class="my-3" id="portfolio">
@@ -55,13 +56,13 @@ const generateProjects = projectsArr => {
   `;
 };
 
-// (in functions w/ no paramaters, empty () are required)
-// arrow function that can receive input and display the data dynamically as a string
-// inserts them in a HTML template literal
+// create the index/HTML
 module.exports = templateData => {
+
   // destructure page data by section
   const { projects, about, ...header } = templateData;
 
+  // generate HTML template
   return `
   <!DOCTYPE html>
   <html lang="en">
