@@ -143,7 +143,7 @@ Add a New Project
 // resolve promise by chaining .then to control sequence of app flow
 // Ask user for their information w/ inquirer prompts
 promptUser()
-  // then ask user for their porject information w/ inquirer prompts
+  // ask user for their porject information w/ inquirer prompts
   .then(promptProject)
   .then(portfolioData => {
     return generatePage(portfolioData);
@@ -152,12 +152,12 @@ promptUser()
   .then(pageHTML => {
     return writeFile(pageHTML);
   })
-  // pass the page HTML to the write file function (returns a promise)
+  // return write file function (returns a promise)
   .then(writeFileResponse => {
     console.log(writeFileResponse);
     return copyFile();
   })
-  // then return copy file- which lets us know if the CSS file was copied correctly
+  // return copy file
   .then(copyFileResponse => {
     console.log(copyFileResponse);
   })
